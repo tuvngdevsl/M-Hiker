@@ -31,11 +31,196 @@
                 android:background="@drawable/custom_edt"
                 android:drawableStart="@drawable/baseline_hiking_24"
                 android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+
+                />
+
+            <EditText
+                android:id="@+id/editTextLocation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingStart="15dp"
+                android:ems="10"
+                android:hint="@string/editTextLocation"
+                android:inputType="text"
+                android:background="@drawable/custom_edt"
+                android:drawableStart="@drawable/outline_location_on_24"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNameHike"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingStart="15dp"
+                android:ems="10"
+                android:hint="@string/editTextDate"
+                android:inputType="text"
+                android:background="@drawable/custom_edt"
+                android:drawableStart="@drawable/outline_date_range_24"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/editTextLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/textViewParking"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:paddingStart="15dp"
+                android:drawableStart="@drawable/baseline_local_parking_24"
+                android:gravity="center"
+                android:text="@string/TextViewParkingAvailable"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDate">
+
+            </TextView>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="16dp"
 
+                android:orientation="horizontal"
+                app:layout_constraintRight_toRightOf="@+id/editTextDate"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/radioButton_yes"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0"
+                    android:text="@string/radioButton_yes" />
+
+                <RadioButton
+                    android:id="@+id/radioButton_no"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0"
+                    android:text="@string/radioButton_no" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/editTextLength"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingStart="15dp"
+                android:ems="10"
+                android:hint="@string/editTextLength"
+                android:inputType="text"
+                android:background="@drawable/custom_edt"
+                android:drawableStart="@drawable/baseline_length_24"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/textViewParking"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/editTextDifficulty"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingStart="15dp"
+                android:ems="10"
+                android:hint="@string/editTextDifficulty"
+                android:inputType="text"
+                android:background="@drawable/custom_edt"
+                android:drawableStart="@drawable/baseline_difficulty_vertical_24"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/editTextLength"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingStart="15dp"
+                android:ems="10"
+                android:hint="@string/editTextDescription"
+                android:inputType="text"
+                android:background="@drawable/custom_edt"
+                android:drawableStart="@drawable/outline_description_24"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDifficulty"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <Spinner
+                android:id="@+id/spinnerWeather"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingStart="15dp"
+                android:ems="10"
+                android:background="@drawable/custom_edt"
+                android:drawableStart="@drawable/outline_description_24"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:inputType="textAutoComplete|textCapWords"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextEstimateTime"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingStart="15dp"
+                android:ems="10"
+                android:hint="@string/editTextEstimatedTime"
+                android:inputType="text"
+                android:background="@drawable/custom_edt"
+                android:drawableStart="@drawable/outline_access_time_24"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="16dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerWeather"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
 
@@ -47,7 +232,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="Save"
-                app:layout_constraintTop_toBottomOf="@id/editTextNameHike"
+                app:layout_constraintTop_toBottomOf="@id/editTextEstimateTime"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="16dp" />

@@ -15,6 +15,10 @@ import java.util.List;
 
 public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeViewHolder> {
 
+    public interface ListItemListener{
+        void onItemClick(String hikeId);
+    }
+
     public class HikeViewHolder extends RecyclerView.ViewHolder{ //View holder is a view of each list item in recycler view
 
         private final ListItemBinding itemViewBinding; // control list_item.xml to list item binding
@@ -27,6 +31,7 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
         public void bindData(HikeEntity hData){
             itemViewBinding.hikeName.setText(hData.getNameHike());
             itemViewBinding.hikeDay.setText(hData.getDateOfHike());
+            itemViewBinding.getRoot().setOnClickListener(v -> listener.onItemClick(hData.getId()));    // itemViewBinding.getRoot() là cả một cái each item trên recyclerview   v là view
 
         }
     }
@@ -54,8 +59,10 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
 
 
     private List<HikeEntity> hikeList;
-    public HikeListAdapter(List<HikeEntity> hikeList){
+    private ListItemListener listener;
+    public HikeListAdapter(List<HikeEntity> hikeList, ListItemListener listener){
         this.hikeList = hikeList;
+        this.listener = listener;
     }
 
 

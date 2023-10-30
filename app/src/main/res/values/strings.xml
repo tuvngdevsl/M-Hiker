@@ -6,7 +6,26 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="textNameHike">Name Hike</string>
+    <string name="textNameHike">Name Hike <font color='#FF0000'>*</font> </string>
+    <string name="editTextLocation">Location Hike <font color='#FF0000'>*</font></string>
+    <string name="editTextDate">Click Choose Day <font color='#FF0000'>*</font></string>
+    <string name="editTextLength">Length the hike <font color='#FF0000'>*</font></string>
+    <string name="editTextDifficulty">Level of difficulty <font color='#FF0000'>*</font></string>
+    <string name="editTextDescription">Description <font color='#FF0000'>*</font></string>
+    <string name="editTextWeather">Weather <font color='#FF0000'>*</font></string>
+    <string name="editTextEstimatedTime">EstimatedTime <font color='#FF0000'>*</font></string>
+    <string name="TextViewParkingAvailable">Parking available <font color='#FF0000'>*</font></string>
+    <string name="radioButton_yes">Yes </string>
+    <string name="radioButton_no">No </string>
+
+
+
+
+
+
+
+
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +19,12 @@ import android.view.ViewGroup;
 import com.example.m_hiker.Adapter.HikeListAdapter;
 import com.example.m_hiker.Model.HikeEntity;
 import com.example.m_hiker.Model.SampleDataProvider;
+import com.example.m_hiker.R;
 import com.example.m_hiker.databinding.FragmentMainBinding;
 
-public class MainHikeFragment extends Fragment {
+import java.util.Optional;
+
+public class MainHikeFragment extends Fragment implements HikeListAdapter.ListItemListener {
 
     private MainHikeViewModel mViewModel;   // View Model is controller
     private FragmentMainBinding binding;
@@ -50,7 +54,7 @@ public class MainHikeFragment extends Fragment {
                 getViewLifecycleOwner(),
                 hikeEntities -> {
 //                    System.out.println("#Hike: " + hikeEntities.size());
-                    adapter = new HikeListAdapter(hikeEntities);
+                    adapter = new HikeListAdapter(hikeEntities, this );
                     binding.recyclerview.setAdapter(adapter);
                     binding.recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -74,4 +78,14 @@ public class MainHikeFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onItemClick(String hikeId) {
+        Optional<HikeEntity> hike = mViewModel.hikeList.getValue().stream().filter(h -> h.getId() == hikeId).findFirst();
+        if(hike.isPresent()){
+            Bundle bundle = new Bundle();   // Bundle la hashmap trong android dung de chuyen du lieu giua 2 fragment
+            bundle.putString("hikeId", hikeId);
+            Navigation.findNavController(getView())
+                    .navigate(R.id.action_mainFragment_to_editorHikeFragment, bundle);
+        }
+    }
 }
