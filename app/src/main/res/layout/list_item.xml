@@ -3,19 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:minHeight="80dp"
+    >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
+        android:layout_marginBottom="5dp"
+        app:fabCustomSize="50dp"
         android:clickable="true"
         android:focusable="true"
         app:fabSize="mini"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_hiking_24"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.FloatingActionButton"
 
         />
 
@@ -27,7 +33,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/floatingActionButton"
         app:layout_constraintTop_toTopOf="parent"

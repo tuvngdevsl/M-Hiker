@@ -55,30 +55,7 @@ public class SampleDataProvider {
                 "Sunny", // weather
                 "5 hours" // estimatedTime
         ));
-        hikes.add(new HikeEntity(
-                "5", // id
-                "Snowdon", // nameHike
-                "Wales", // location
-                "2022-08-15", // dateOfHike
-                true, // parkingAvailable
-                "10 miles", // lengthTheHike
-                "Moderate", // difficulty
-                "A beautiful hike in the mountains.", // description
-                "Sunny", // weather
-                "5 hours" // estimatedTime
-        ));
-        hikes.add(new HikeEntity(
-                "6", // id
-                "Snowdon", // nameHike
-                "Wales", // location
-                "2022-08-15", // dateOfHike
-                true, // parkingAvailable
-                "10 miles", // lengthTheHike
-                "Moderate", // difficulty
-                "A beautiful hike in the mountains.", // description
-                "Sunny", // weather
-                "5 hours" // estimatedTime
-        ));
+
 
         return hikes;
     }

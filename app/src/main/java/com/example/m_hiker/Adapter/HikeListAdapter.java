@@ -34,14 +34,14 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
     @NonNull
     @Override
     public HikeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {   // display each of hike in recyclerview
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())                              // Tại mỗi dòng có view nào được hiển thị
+                .inflate(R.layout.list_item, parent, false);                   // Tạo view từ R.layout.listitem.xml
 
         return new HikeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HikeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HikeViewHolder holder, int position) { // hàm để đưa dữ liệu đưa vào onBindViewHolder, Và position của từng dòng
         HikeEntity hData = hikeList.get(position);
         holder.bindData(hData);
     }
@@ -49,10 +49,7 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
     @Override
     public int getItemCount() {
         return hikeList.size();
-    }
-
-
-
+    }   // Nói trước cho recycler view bao nhiêu dòng của list hike được hiển thị
 
 
 

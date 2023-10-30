@@ -1,7 +1,5 @@
 package com.example.m_hiker.Model;
 
-import com.example.m_hiker.Constants;
-
 public class HikeEntity {
 
     private String id;

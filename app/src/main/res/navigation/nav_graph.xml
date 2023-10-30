@@ -7,7 +7,17 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.m_hiker.MainFragment"
+        android:name="com.example.m_hiker.ui.hike.MainHikeFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_editorHikeFragment"
+            app:destination="@id/editorHikeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editorHikeFragment"
+        android:name="com.example.m_hiker.ui.hike.EditorHikeFragment"
+        android:label="fragment_editor_hike"
+        tools:layout="@layout/fragment_editor_hike" />
 </navigation>

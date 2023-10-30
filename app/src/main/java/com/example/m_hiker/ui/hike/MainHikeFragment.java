@@ -1,4 +1,4 @@
-package com.example.m_hiker;
+package com.example.m_hiker.ui.hike;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,21 +20,21 @@ import com.example.m_hiker.Model.HikeEntity;
 import com.example.m_hiker.Model.SampleDataProvider;
 import com.example.m_hiker.databinding.FragmentMainBinding;
 
-public class MainFragment extends Fragment {
+public class MainHikeFragment extends Fragment {
 
-    private MainViewModel mViewModel;   // View Model is controller
+    private MainHikeViewModel mViewModel;   // View Model is controller
     private FragmentMainBinding binding;
     private HikeListAdapter adapter;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static MainHikeFragment newInstance() {
+        return new MainHikeFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MainHikeViewModel.class);
         binding = FragmentMainBinding.inflate(inflater, container, false);
 
         HikeEntity h = SampleDataProvider.getHikes().get(0);
@@ -59,19 +59,19 @@ public class MainFragment extends Fragment {
 
 
 
-        View v = binding.getRoot();
+        View root = binding.getRoot();
 
 
 
 
-        return v;
+        return root;
 
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }
