@@ -1,8 +1,6 @@
 package com.example.m_hiker.ui.hike;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
@@ -12,16 +10,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavAction;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -33,43 +30,45 @@ import com.example.m_hiker.Model.Database.AppDatabase;
 import com.example.m_hiker.Model.Database.RoomHelper;
 import com.example.m_hiker.Model.Hike.HikeEntity;
 import com.example.m_hiker.R;
-import com.example.m_hiker.databinding.FragmentEditorHikeBinding;
-import com.example.m_hiker.databinding.FragmentMainBinding;
+import com.example.m_hiker.databinding.FragmentAddHikeBinding;
 
-import java.sql.SQLOutput;
 import java.util.Calendar;
 
-public class EditorHikeFragment extends Fragment {
-    private EditorHikeViewModel mViewModel;
-    int doResult = 0;
-    private DatePickerDialog datePickerDialog;
-    private AppDatabase db;
-    private FragmentEditorHikeBinding binding;
+public class AddHikeFragment extends Fragment {
 
-    public static EditorHikeFragment newInstance() {
-        return new EditorHikeFragment();
+    private DatePickerDialog datePickerDialog;
+    private FragmentAddHikeBinding binding;
+    private AppDatabase db;
+    private int doResult = 1;
+
+    public static AddHikeFragment newInstance() {
+        return new AddHikeFragment();
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+        binding = FragmentAddHikeBinding.inflate(inflater, container, false);
         db = RoomHelper.initDatabase(getContext());
-        mViewModel = new ViewModelProvider(this).get(EditorHikeViewModel.class);
-        mViewModel.setDatabase(db);
 
-        binding = FragmentEditorHikeBinding.inflate(inflater, container, false);
-        //Spinner weather
+
+        // Dropdown
         Spinner weather = binding.spinnerWeather;
         ArrayAdapter<CharSequence> adapterWeather = ArrayAdapter.createFromResource(getActivity(),
                 R.array.weather_array, android.R.layout.simple_spinner_item);
         adapterWeather.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         weather.setAdapter(adapterWeather);
-        //Spinner difficulty
+
         Spinner levelDifficulty = binding.spinnerDifficulty;
         ArrayAdapter<CharSequence> adapterDifficulty = ArrayAdapter.createFromResource(getActivity(),
                 R.array.difficulty_array, android.R.layout.simple_spinner_item);
         adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         levelDifficulty.setAdapter(adapterDifficulty);
+
+
+
+
         //DatePicker
         binding.editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +88,10 @@ public class EditorHikeFragment extends Fragment {
 
             }
         });
+        CalendarExpense();
 
-        //check radio
+        // Check radio Button
+        binding.radioGroup.check(R.id.radioButton_yes);
         binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -101,37 +102,16 @@ public class EditorHikeFragment extends Fragment {
                 }
             }
         });
-
-
-
-        //getAgurment tu fragment
-        int hikeId = getArguments().getInt("hikeId"); //getArguments lay(nhan) du lieu tu mainFragment key phai trung voi key ben fragment
-        mViewModel.hike.observe(
-                getViewLifecycleOwner(),
-                he -> {
-                    binding.editTextNameHike.setText(he.getNameHike());
-                    binding.editTextLocation.setText(he.getLocation());
-                    binding.editTextDate.setText(he.getDateOfHike());
-                    binding.radioGroup.check(he.getParkingAvailable() == 1 ? binding.radioButtonYes.getId() : binding.radioButtonNo.getId());
-                    binding.editTextLength.setText(he.getLengthTheHike());
-                    binding.spinnerDifficulty.setSelection(adapterDifficulty.getPosition(he.getDifficulty()));
-                    binding.editTextDescription.setText(he.getDescription());
-                    binding.spinnerWeather.setSelection(adapterWeather.getPosition(he.getWeather()));
-                    binding.editTextEstimateTime.setText(he.getEstimatedTime());
-                }
-        );
-
-        mViewModel.getHikeById(hikeId);  // trả về một đối tượng LiveData chứa thông tin về một "hike" dựa trên ID đã được cung cấp (hikeId);
-
-        //Save detail hike
-        binding.buttonSave.setOnClickListener(v -> this.handleSave(hikeId));
+        // Save Hike Button
+        binding.buttonSave.setOnClickListener(v -> this.handleSave());
 
 
         View root = binding.getRoot();
         return root;
     }
 
-    private void handleSave(int hikeId) {
+
+    private void handleSave() {
         if (binding.editTextNameHike.length() == 0) {
             showError(binding.editTextNameHike, "Name of Hike is Required");
         }
@@ -169,24 +149,32 @@ public class EditorHikeFragment extends Fragment {
             String name = binding.editTextNameHike.getText().toString();
             String location = binding.editTextLocation.getText().toString();
             String date = binding.editTextDate.getText().toString();
-            int parkingAvailable = binding.radioGroup.getCheckedRadioButtonId() == binding.radioButtonYes.getId() ? 1 : 0;
             String length = binding.editTextLength.getText().toString();
             String difficulty = binding.spinnerDifficulty.getSelectedItem().toString();
             String description = binding.editTextDescription.getText().toString();
             String weather = binding.spinnerWeather.getSelectedItem().toString();
             String estimateTime = binding.editTextEstimateTime.getText().toString();
 
-            HikeEntity updateHike = new HikeEntity(name, location, date, parkingAvailable, length, difficulty, description, weather, estimateTime);
-            updateHike.setHikeId(hikeId);
-            showConfirmationDialog(updateHike);
+            HikeEntity hike = new HikeEntity(name, location, date, doResult, length, difficulty, description, weather, estimateTime);
+            showConfirmationDialog(hike);
 
 
         }
+
+
     }
 
     private void showError(EditText editText, String errorMessage) {
         editText.requestFocus();
         editText.setError(errorMessage);
+    }
+
+    private void CalendarExpense() {
+        Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+        binding.editTextDate.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
     }
 
     HikeEntity currentHike;
@@ -208,9 +196,9 @@ public class EditorHikeFragment extends Fragment {
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                mViewModel.updateHike(hike);
-                Navigation.findNavController(getView()).navigateUp();
-                Toast.makeText(getContext(), "Update Hike Successfully!", Toast.LENGTH_SHORT).show();
+                db.hikeDao().insertHike(hike);
+                Navigation.findNavController(getView()).navigate(R.id.mainFragment);
+                Toast.makeText(getContext(), "Add Hike Successfully!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -231,11 +219,14 @@ public class EditorHikeFragment extends Fragment {
             binding.editTextLocation.setText(currentHike.getLocation());
             binding.editTextDate.setText(currentHike.getDateOfHike());
             binding.editTextLength.setText(currentHike.getLengthTheHike());
+
             String difficulty = currentHike.getDifficulty();
             ArrayAdapter adapterDifficulty = (ArrayAdapter) binding.spinnerDifficulty.getAdapter();
             int spinnerDifficultyPosition = adapterDifficulty.getPosition(difficulty);
             binding.spinnerDifficulty.setSelection(spinnerDifficultyPosition);
+
             binding.editTextDescription.setText(currentHike.getDescription());
+
             String weather = currentHike.getWeather();
             ArrayAdapter adapter = (ArrayAdapter) binding.spinnerWeather.getAdapter();
             int spinnerPosition = adapter.getPosition(weather);
@@ -243,39 +234,6 @@ public class EditorHikeFragment extends Fragment {
             binding.editTextEstimateTime.setText(currentHike.getEstimatedTime());
         }
     }
-
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-       inflater.inflate(R.menu.menu_delete, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-       switch (item.getItemId()){
-           case R.id.action_delete:
-               return deleteAndReturn();
-           default: return super.onContextItemSelected(item);
-       }
-
-    }
-
-    private boolean deleteAndReturn() {
-        new AlertDialog.Builder(getContext())
-                .setTitle("Confirm Delete")
-                .setMessage("Are you sure to delete trip?!!")
-                .setNegativeButton("No", null)
-                .setNeutralButton("Yes", (dialog, delete) -> {
-                    int hikeId = getArguments().getInt("hikeId");
-                    HikeEntity hike = db.hikeDao().getHikeById(hikeId);
-                    mViewModel.deleteHike(hike);
-                    Toast.makeText(getActivity(), "Delete Hike Successfully", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(getView()).navigateUp();
-                }).show();
-        return true;
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

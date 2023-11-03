@@ -1,52 +1,45 @@
 package com.example.m_hiker.Adapter;
 
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.m_hiker.Model.HikeEntity;
+import com.example.m_hiker.Model.Hike.HikeEntity;
 import com.example.m_hiker.R;
 import com.example.m_hiker.databinding.ListItemBinding;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import android.os.Handler;
 
-public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeViewHolder> {
+public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeViewHolder> implements Filterable {
+    private List<HikeEntity> hikeList;
+    private List<HikeEntity> hikeListFull;
+    private ListItemListener listener;
 
-    public interface ListItemListener{
-        void onItemClick(String hikeId);
-    }
-
-    public class HikeViewHolder extends RecyclerView.ViewHolder{ //View holder is a view of each list item in recycler view
-
-        private final ListItemBinding itemViewBinding; // control list_item.xml to list item binding
-
-        public HikeViewHolder(View itemView) { // Hike View Holder Chứa cái UI list item.
-            super(itemView);
-            this.itemViewBinding = ListItemBinding.bind(itemView);
-        }
-
-        public void bindData(HikeEntity hData){
-            itemViewBinding.hikeName.setText(hData.getNameHike());
-            itemViewBinding.hikeDay.setText(hData.getDateOfHike());
-            itemViewBinding.getRoot().setOnClickListener(v -> listener.onItemClick(hData.getId()));    // itemViewBinding.getRoot() là cả một cái each item trên recyclerview   v là view
-
-        }
+    public HikeListAdapter(List<HikeEntity> hikeList, ListItemListener listener) {
+        this.hikeList = hikeList;
+        this.listener = listener;
+        this.hikeListFull = new ArrayList<>(hikeList);
     }
 
     @NonNull
     @Override
-    public HikeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {   // display each of hike in recyclerview
-        View view = LayoutInflater.from(parent.getContext())                              // Tại mỗi dòng có view nào được hiển thị
-                .inflate(R.layout.list_item, parent, false);                   // Tạo view từ R.layout.listitem.xml
-
+    public HikeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item, parent, false);
         return new HikeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HikeViewHolder holder, int position) { // hàm để đưa dữ liệu đưa vào onBindViewHolder, Và position của từng dòng
+    public void onBindViewHolder(@NonNull HikeViewHolder holder, int position) {
         HikeEntity hData = hikeList.get(position);
         holder.bindData(hData);
     }
@@ -54,16 +47,70 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
     @Override
     public int getItemCount() {
         return hikeList.size();
-    }   // Nói trước cho recycler view bao nhiêu dòng của list hike được hiển thị
-
-
-
-    private List<HikeEntity> hikeList;
-    private ListItemListener listener;
-    public HikeListAdapter(List<HikeEntity> hikeList, ListItemListener listener){
-        this.hikeList = hikeList;
-        this.listener = listener;
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<HikeEntity> filteredList = new ArrayList<>();
+                if(constraint.toString().isEmpty()){
+                    filteredList.addAll(hikeListFull);
+                }else{
+                    String filter = constraint.toString().toLowerCase().trim();
+                    for (HikeEntity item : hikeListFull) {
+                        if (item.getNameHike().toLowerCase().contains(filter)) {
+                            filteredList.add(item);
+                        } else if (item.getLocation().toLowerCase().contains(filter)) {
+                            filteredList.add(item);
+                        } else if (item.getDateOfHike().toLowerCase().contains(filter)) {
+                            filteredList.add(item);
+                        } else if (item.getLengthTheHike().toLowerCase().contains(filter)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
 
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        hikeList.clear();
+                        hikeList.addAll((Collection<? extends HikeEntity>) results.values);
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        };
+    }
+
+    public interface ListItemListener {
+        void onItemClick(int hikeId);
+    }
+
+    public class HikeViewHolder extends RecyclerView.ViewHolder {
+        private final ListItemBinding itemViewBinding;
+
+        public HikeViewHolder(View itemView) {
+            super(itemView);
+            this.itemViewBinding = ListItemBinding.bind(itemView);
+        }
+
+        public void bindData(HikeEntity hData) {
+            itemViewBinding.hikeName.setText(hData.getNameHike());
+            itemViewBinding.hikeDay.setText(hData.getDateOfHike());
+            itemViewBinding.hikeLength.setText(hData.getLengthTheHike());
+            itemViewBinding.hikeLocation.setText(hData.getLocation());
+            itemViewBinding.getRoot().setOnClickListener(v -> listener.onItemClick(hData.getHikeId()));
+        }
+    }
 }

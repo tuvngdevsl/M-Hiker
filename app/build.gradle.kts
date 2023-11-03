@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.m_hiker"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -18,7 +18,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
+
 
     buildTypes {
         release {
@@ -49,14 +51,27 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes +="/META-INF/services/javax.annotation.processing.Processor"
         }
     }
+
+
+
+
 
 }
 
 dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    // Recyclerview
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    implementation ("androidx.recyclerview:recyclerview-selection:1.1.0")
+    // SQLite room
+    implementation ("androidx.room:room-runtime:2.4.0")
+    annotationProcessor ("androidx.room:room-compiler:2.4.0")
+
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     // Recyclerview
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
@@ -74,6 +89,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.4")
     implementation("androidx.navigation:navigation-ui:2.7.4")
     implementation("com.google.android.material:material:1.6.1")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
@@ -88,4 +104,5 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
 }

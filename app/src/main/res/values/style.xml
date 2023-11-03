@@ -10,4 +10,5 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item> <!-- Đặt góc bo tròn 50% để tạo hình tròn -->
     </style>
+
 </resources>
