@@ -19,6 +19,11 @@
     <string name="radioButton_no">No </string>
     <string name="delete">Delete </string>
     <string name="search">Search</string>
+    <string name="observation">Observation</string>
+    <string name="save">Save</string>
+    <string name="textObservation">Observation <font color='#FF0000'>*</font> </string>
+    <string name="textComment">Additional Comment</string>
+    <string name="home">Home</string>
 
 
     <string-array name="weather_array">

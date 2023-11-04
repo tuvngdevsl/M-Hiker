@@ -177,9 +177,8 @@ public class AddHikeFragment extends Fragment {
         binding.editTextDate.setText(mDay + "/" + (mMonth + 1) + "/" + mYear);
     }
 
-    HikeEntity currentHike;
+
     private void showConfirmationDialog(HikeEntity hike){
-        currentHike = hike;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Confirmation");
         builder.setIcon(R.drawable.baseline_check_circle_outline_24);
@@ -204,7 +203,7 @@ public class AddHikeFragment extends Fragment {
 
         builder.setNegativeButton("Make Changes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                fillFields(currentHike);
+
             }
         });
 
@@ -213,27 +212,7 @@ public class AddHikeFragment extends Fragment {
     }
 
     //Temp data
-    private void fillFields(HikeEntity hike){
-        if(hike != null){
-            binding.editTextNameHike.setText(currentHike.getNameHike());
-            binding.editTextLocation.setText(currentHike.getLocation());
-            binding.editTextDate.setText(currentHike.getDateOfHike());
-            binding.editTextLength.setText(currentHike.getLengthTheHike());
 
-            String difficulty = currentHike.getDifficulty();
-            ArrayAdapter adapterDifficulty = (ArrayAdapter) binding.spinnerDifficulty.getAdapter();
-            int spinnerDifficultyPosition = adapterDifficulty.getPosition(difficulty);
-            binding.spinnerDifficulty.setSelection(spinnerDifficultyPosition);
-
-            binding.editTextDescription.setText(currentHike.getDescription());
-
-            String weather = currentHike.getWeather();
-            ArrayAdapter adapter = (ArrayAdapter) binding.spinnerWeather.getAdapter();
-            int spinnerPosition = adapter.getPosition(weather);
-            binding.spinnerWeather.setSelection(spinnerPosition);
-            binding.editTextEstimateTime.setText(currentHike.getEstimatedTime());
-        }
-    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

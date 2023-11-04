@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_editorHikeFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_editorHikeFragment_to_mainObservationFragment"
+            app:destination="@id/mainObservationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addHikeFragment"
@@ -36,4 +39,29 @@
             android:id="@+id/action_addHikeFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mainObservationFragment"
+        android:name="com.example.m_hiker.ui.observe.MainObservationFragment"
+        android:label="Observation"
+        tools:layout="@layout/fragment_main_observation" >
+        <action
+            android:id="@+id/action_mainObservationFragment_to_addObservationFragment"
+            app:destination="@id/addObservationFragment" />
+        <action
+            android:id="@+id/action_mainObservationFragment_to_editorObservationFragment"
+            app:destination="@id/editorObservationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addObservationFragment"
+        android:name="com.example.m_hiker.ui.observe.AddObservationFragment"
+        android:label="Add Observation" >
+        <action
+            android:id="@+id/action_addObservationFragment_to_mainObservationFragment"
+            app:destination="@id/mainObservationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editorObservationFragment"
+        android:name="com.example.m_hiker.ui.observe.EditorObservationFragment"
+        android:label="Edit Observation"
+        tools:layout="@layout/fragment_editor_observation" />
 </navigation>

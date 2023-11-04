@@ -10,8 +10,6 @@ import java.util.List;
 
 @Dao
 public interface ObservationDao {
-    @Query("SELECT * FROM observation_table WHERE hikeId= :hikeId")
-    List<ObservationEntity> getObservationsForHike(int hikeId);
 
     @Insert
     void insertObservation(ObservationEntity observation);
@@ -21,4 +19,21 @@ public interface ObservationDao {
 
     @Delete
     void deleteObservation(ObservationEntity observation);
+
+
+    @Query("DELETE FROM observation_table WHERE observationId = :id")
+    void deleteById(int id);
+    @Query("SELECT * FROM observation_table")
+    List<ObservationEntity> getAllObservation();
+
+    @Query("SELECT * FROM observation_table WHERE hikeId = :hikeId")
+    List<ObservationEntity> getHikeById(int hikeId);
+
+    @Query("SELECT * FROM observation_table WHERE observationId = :id")
+    ObservationEntity getObservationById(int id);
+
+    @Query("DELETE FROM observation_table")
+    void deleteAllObservation();
+
+
 }

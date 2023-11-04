@@ -14,7 +14,6 @@ public class MainHikeViewModel extends ViewModel {
     // View Model is controller
     AppDatabase db;
     MutableLiveData<List<HikeEntity>> hikeList;
-    MutableLiveData<List<ObservationEntity>> ObservationList;
 
     public void setDatabase(AppDatabase db){
         this.db = db;
@@ -22,7 +21,6 @@ public class MainHikeViewModel extends ViewModel {
 
     public MainHikeViewModel(){
         hikeList = new MutableLiveData<List<HikeEntity>>();
-        ObservationList = new MutableLiveData<List<ObservationEntity>>();
     }
 
     public MutableLiveData<List<HikeEntity>> getHikeData(){
@@ -32,7 +30,7 @@ public class MainHikeViewModel extends ViewModel {
     }
 
     public void deleteAllHike(){
-        db.hikeDao().deleteAllTrip();
+        db.hikeDao().deleteAllHike();
     }
 
 

@@ -2,12 +2,9 @@ package com.example.m_hiker.ui.hike;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.m_hiker.Model.Constants;
 import com.example.m_hiker.Model.Database.AppDatabase;
-import com.example.m_hiker.Model.Database.RoomHelper;
 import com.example.m_hiker.Model.Hike.HikeEntity;
-import com.example.m_hiker.Model.Observation.ObservationEntity;
+
 
 import java.util.List;
 

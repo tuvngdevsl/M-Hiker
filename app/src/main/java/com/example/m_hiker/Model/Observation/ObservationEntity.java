@@ -4,31 +4,43 @@ import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import com.example.m_hiker.Model.Constants;
 import com.example.m_hiker.Model.Hike.HikeEntity;
 
-import java.util.Date;
 
-@Entity(tableName = "observation_table",
-        foreignKeys = @ForeignKey(entity = HikeEntity.class,
-                parentColumns = "hikeId",
-                childColumns = "hikeId",
-                onDelete = ForeignKey.CASCADE),
-        indices = {@Index("hikeId")})
+@Entity(tableName = "observation_table")
 public class ObservationEntity {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull private int observationId;
-    private int hikeId;
+
+    @Embedded
+    private HikeEntity hikeEntity;
 
     private String observation;
     private String timeOfObservation;
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    private String photoPath;
+
+
     private String additionalComments;
 
+
+    public HikeEntity getHikeEntity() {
+        return hikeEntity;
+    }
+
+    public void setHikeEntity(HikeEntity hikeEntity) {
+        this.hikeEntity = hikeEntity;
+    }
     public int getObservationId() {
         return observationId;
     }
@@ -37,13 +49,6 @@ public class ObservationEntity {
         this.observationId = observationId;
     }
 
-    public int getHikeId() {
-        return hikeId;
-    }
-
-    public void setHikeId(int hikeId) {
-        this.hikeId = hikeId;
-    }
 
     public String getObservation() {
         return observation;
@@ -69,13 +74,16 @@ public class ObservationEntity {
         this.additionalComments = additionalComments;
     }
 
+    public ObservationEntity(){
 
-    public ObservationEntity(int hikeId, String observation, String timeOfObservation, String additionalComments) {
-        this.hikeId = hikeId;
+    }
+    public ObservationEntity(HikeEntity hikeEntity, String observation, String timeOfObservation, String additionalComments) {
+        this.hikeEntity = hikeEntity;
         this.observation = observation;
         this.timeOfObservation = timeOfObservation;
         this.additionalComments = additionalComments;
     }
+
 
     public void validate() throws Exception {
         if (observation.isEmpty() || timeOfObservation == null || additionalComments.isEmpty()) {

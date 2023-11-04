@@ -2,10 +2,8 @@ package com.example.m_hiker.Model.Hike;
 
 
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.m_hiker.Model.Constants;
 
 @Entity(tableName = "hike_table")
 public class HikeEntity {

@@ -41,7 +41,7 @@ public class MainHikeFragment extends Fragment implements HikeListAdapter.ListIt
     private SearchView searchView;
     private FragmentMainBinding binding;
     private HikeListAdapter adapter;
-    private List<HikeEntity> listHike;
+
     private AppDatabase db;
 
     public static MainHikeFragment newInstance() {
@@ -53,7 +53,7 @@ public class MainHikeFragment extends Fragment implements HikeListAdapter.ListIt
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         db = RoomHelper.initDatabase(getContext());
-        listHike = new ArrayList<>();
+
         mViewModel = new ViewModelProvider(this).get(MainHikeViewModel.class);
         mViewModel.setDatabase(db);
         binding = FragmentMainBinding.inflate(inflater, container, false);
@@ -70,18 +70,16 @@ public class MainHikeFragment extends Fragment implements HikeListAdapter.ListIt
         mViewModel.getHikeData().observe(
                 getViewLifecycleOwner(),
                 hikeEntities -> {
-
                     adapter = new HikeListAdapter(hikeEntities, this);
                     binding.recyclerview.setAdapter(adapter);
                     binding.recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-
                 }
         );
 
         View root = binding.getRoot();
 
 
-        binding.fabAddTrip.setOnClickListener(v -> this.handleClick());
+        binding.fabAddHike.setOnClickListener(v -> this.handleClick());
         return root;
 
     }
@@ -90,8 +88,6 @@ public class MainHikeFragment extends Fragment implements HikeListAdapter.ListIt
     @Override
     public void onItemClick(int hikeId) {
         Optional<HikeEntity> hike = mViewModel.hikeList.getValue().stream().filter(h -> h.getHikeId() == hikeId).findFirst();
-
-        Log.d("HikeEntity", "Hike: " + hike.get().toString());
 
         if (hike.isPresent()) {
             Bundle bundle = new Bundle();   // Bundle la hashmap trong android dung de chuyen du lieu giua 2 fragment

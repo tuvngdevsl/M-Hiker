@@ -232,9 +232,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
+            <Button
+                android:id="@+id/buttonObservation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/observation"
+                app:layout_constraintTop_toBottomOf="@id/editTextEstimateTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
 
+                />
 
-            <!-- Add similar constraints for other views (EditText, CheckBox, etc.) here -->
 
             <Button
                 android:id="@+id/buttonSave"
@@ -242,11 +253,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Save"
-                app:layout_constraintTop_toBottomOf="@id/editTextEstimateTime"
+                android:text="@string/save"
+                app:layout_constraintTop_toBottomOf="@id/buttonObservation"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="10dp"
+               />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
